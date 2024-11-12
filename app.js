@@ -21,16 +21,34 @@ app.post("/data/:droneId", (req, res) => {
 });
 
 // Route to retrieve data for a specific drone by ID
-app.get("/data/:droneId", (req, res) => {
-  const { droneId } = req.params;
-  const data = sensorDataStorage[droneId];
+// app.get("/data/:droneId", (req, res) => {
+//   const { droneId } = req.params;
+//   const data = sensorDataStorage[droneId];
 
-  if (data) {
-    res.json(data);
-  } else {
-    res.status(404).json({ error: `No data found for drone ${droneId}` });
+//   if (data) {
+//     res.json(data);
+//   } else {
+//     res.status(404).json({ error: `No data found for drone ${droneId}` });
+//   }
+// });
+const droneId = "drone1"; // Replace with the actual drone ID
+const endpoint = `http://localhost:5000/data/${droneId}`;
+const fetchData = async () => {
+  try {
+    const response = await fetch(endpoint);
+    if (response.ok) {
+      const data = await response.json();
+      console.log(`Data for ${droneId}:`, data);
+    } else {
+      console.error(`No data found for drone ${droneId}`);
+    }
+  } catch (error) {
+    console.error("Error fetching data:", error);
   }
-});
+};
+
+// Poll the endpoint every second
+setInterval(fetchData, 1000);
 
 // Route to retrieve the latest data for all drones
 app.get("/latest_data", (req, res) => {

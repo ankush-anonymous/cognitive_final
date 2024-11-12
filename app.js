@@ -32,9 +32,6 @@ app.get("/data/:droneId", (req, res) => {
   }
 });
 
-// Poll the endpoint every second
-setInterval(fetchData, 1000);
-
 // Route to retrieve the latest data for all drones
 app.get("/latest_data", (req, res) => {
   res.json(sensorDataStorage);

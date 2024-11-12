@@ -16,6 +16,7 @@ app.post("/data/:droneId", (req, res) => {
   // Store or update sensor data for this specific drone ID
   sensorDataStorage[droneId] = data;
 
+  console.log(`Data received for drone ${droneId}:`, data);
   res.json({ message: `Data for drone ${droneId} received successfully` });
 });
 
@@ -29,6 +30,11 @@ app.get("/data/:droneId", (req, res) => {
   } else {
     res.status(404).json({ error: `No data found for drone ${droneId}` });
   }
+});
+
+// Route to retrieve the latest data for all drones
+app.get("/latest_data", (req, res) => {
+  res.json(sensorDataStorage);
 });
 
 // Start the server

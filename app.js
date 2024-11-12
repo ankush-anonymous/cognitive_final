@@ -38,7 +38,7 @@ const fetchData = async () => {
     const response = await fetch(endpoint);
     if (response.ok) {
       const data = await response.json();
-      console.log(`Data for ${droneId}:`, data);
+      res.json(data);
     } else {
       console.error(`No data found for drone ${droneId}`);
     }
